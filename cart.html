@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cart — Gothyxan</title>
+  <meta name="description" content="Gothyxan shopping cart">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Gothyxan</a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="catalog.html">Shop</a></li>
+          <li><a href="#">Categories</a></li>
+          <li><a href="#">New</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn search-btn" aria-label="Search">🔍</button>
+        <a class="cart-btn" href="cart.html" aria-label="Cart">🛒 <span class="cart-count">0</span></a>
+        <button class="burger" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Cart</h1>
+
+    <div id="cart-empty" class="muted" style="display:none">Your cart is empty. <a href="catalog.html">Go to catalog</a></div>
+
+    <table id="cart-table" class="cart-table" style="width:100%;border-collapse:collapse;display:none">
+      <thead style="text-align:left;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.03)">
+        <tr>
+          <th style="padding:12px 8px">Product</th>
+          <th style="padding:12px 8px">Price</th>
+          <th style="padding:12px 8px">Quantity</th>
+          <th style="padding:12px 8px">Total</th>
+          <th style="padding:12px 8px"></th>
+        </tr>
+      </thead>
+      <tbody id="cart-items"></tbody>
+    </table>
+
+    <div id="cart-summary" style="margin-top:18px;display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="muted">Total items: <span id="cart-total-qty">0</span></div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="font-weight:700;font-size:1.125rem">Subtotal: <span id="cart-total-sum">0</span></div>
+          <button id="clear-cart" class="btn ghost">Clear</button>
+          <button id="checkout" class="btn primary">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <small>© 2025 Gothyxan. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+  <script>
+    // Cart page initialization and handlers
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.GOTHYXAN_renderCart) window.GOTHYXAN_renderCart();
+
+      document.getElementById('clear-cart').addEventListener('click', () => {
+        if (confirm('Clear the cart?')) {
+          window.GOTHYXAN_clearCart();
+          window.GOTHYXAN_renderCart();
+        }
+      });
+
+      document.getElementById('checkout').addEventListener('click', () => {
+        if (window.GOTHYXAN_getCount() === 0) {
+          alert('Your cart is empty');
+          return;
+        }
+        // Checkout stub
+        alert('Thank you! Your order has been registered (stub).');
+        window.GOTHYXAN_clearCart();
+        window.GOTHYXAN_renderCart();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Catalog — Gothyxan</title>
+  <meta name="description" content="Gothyxan catalog — clothing, footwear and accessories.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Gothyxan</a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="catalog.html">Shop</a></li>
+          <li><a href="#">Categories</a></li>
+          <li><a href="#">New</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn search-btn" aria-label="Search">🔍</button>
+        <a class="cart-btn" href="cart.html" aria-label="Cart">🛒 <span class="cart-count">0</span></a>
+        <button class="burger" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container">
+      <div class="section-head">
+        <h1>Catalog</h1>
+        <div class="controls">
+          <label class="select">
+            Sort:
+            <select id="sort">
+              <option value="default">Default</option>
+              <option value="price-asc">Price ↑</option>
+              <option value="price-desc">Price ↓</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div id="products-grid" class="products-grid catalog-grid">
+        <article class="product-card" data-id="prod-001" data-title="Coat 'Nocturne'" data-price="7990" data-img="https://picsum.photos/seed/prod1/600/600">
+          <a href="product.html?id=prod-001" class="product-media">
+            <img src="https://picsum.photos/seed/prod1/600/600" alt="Nocturne coat">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="product.html?id=prod-001">Coat 'Nocturne'</a></h3>
+            <div class="product-meta">M, L, XL</div>
+            <div class="product-foot">
+              <div class="price">7,990 ₽</div>
+              <button class="btn small add-to-cart" type="button">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-id="prod-002" data-title="Belt 'Raven'" data-price="1990" data-img="https://picsum.photos/seed/prod2/600/600">
+          <a href="product.html?id=prod-002" class="product-media">
+            <img src="https://picsum.photos/seed/prod2/600/600" alt="Raven belt">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="product.html?id=prod-002">Belt 'Raven'</a></h3>
+            <div class="product-meta">Leather</div>
+            <div class="product-foot">
+              <div class="price">1,990 ₽</div>
+              <button class="btn small add-to-cart" type="button">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-id="prod-003" data-title="Dress 'Eclipse'" data-price="5490" data-img="https://picsum.photos/seed/prod3/600/600">
+          <a href="product.html?id=prod-003" class="product-media">
+            <img src="https://picsum.photos/seed/prod3/600/600" alt="Eclipse dress">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="product.html?id=prod-003">Dress 'Eclipse'</a></h3>
+            <div class="product-meta">XS, S, M</div>
+            <div class="product-foot">
+              <div class="price">5,490 ₽</div>
+              <button class="btn small add-to-cart" type="button">Add</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-id="prod-004" data-title="Boots 'Void'" data-price="9200" data-img="https://picsum.photos/seed/prod4/600/600">
+          <a href="product.html?id=prod-004" class="product-media">
+            <img src="https://picsum.photos/seed/prod4/600/600" alt="Void boots">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="product.html?id=prod-004">Boots 'Void'</a></h3>
+            <div class="product-meta">EU 40–44</div>
+            <div class="product-foot">
+              <div class="price">9,200 ₽</div>
+              <button class="btn small add-to-cart" type="button">Add</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <small>© 2025 Gothyxan. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+  <script>
+    // Simple client-side sorting
+    document.getElementById('sort')?.addEventListener('change', (e) => {
+      const val = e.target.value;
+      const container = document.getElementById('products-grid');
+      const cards = Array.from(container.querySelectorAll('.product-card'));
+      if (val === 'price-asc') {
+        cards.sort((a,b)=> +a.dataset.price - +b.dataset.price);
+      } else if (val === 'price-desc') {
+        cards.sort((a,b)=> +b.dataset.price - +a.dataset.price);
+      } else {
+        cards.sort((a,b)=> a.dataset.id.localeCompare(b.dataset.id));
+      }
+      cards.forEach(c=>container.appendChild(c));
+    });
+  </script>
+</body>
+</html>

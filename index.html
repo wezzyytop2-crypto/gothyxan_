@@ -1,197 +1,192 @@
-﻿<!doctype html>
-<html lang="ru">
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Gothyxan — Магазин альтернативной моды</title>
-    <meta name="description" content="Gothyxan — магазин альтернативной и готической одежды, аксессуаров и мерча.">
-
-    <!-- Google Fonts: явно запрашиваем кириллицу -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap&subset=cyrillic" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 30px 0 50px;
+            font-weight: 300;
+            font-size: 32px;
+            letter-spacing: 1px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            justify-content: center;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .product-image-container {
+            width: 100%;
+            height: 380px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.03);
+        }
+        
+        .product-info {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .product-brand {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            color: #222;
+        }
+        
+        .product-code {
+            font-size: 13px;
+            color: #aaa;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+        
+        .add-to-cart-btn {
+            width: 100%;
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: #333;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #000;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 30px;
+            }
+            
+            .product-image-container {
+                height: 320px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+            
+            .page-title {
+                font-size: 24px;
+                margin: 20px 0 30px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="container header-inner">
-            <a class="logo" href="index.html">Gothyxan</a>
-
-            <nav class="main-nav" aria-label="Главная навигация">
-                <ul>
-                    <li><a href="catalog.html">Магазин</a></li>
-                    <li><a href="#">Категории</a></li>
-                    <li><a href="#">Новинки</a></li>
-                    <li><a href="#">Контакты</a></li>
-                </ul>
-            </nav>
-
-            <div class="header-actions">
-                <button class="icon-btn search-btn" aria-label="Поиск">🔍</button>
-                <a class="cart-btn" href="cart.html" aria-label="Корзина">🛒 <span class="cart-count">0</span></a>
-                <button class="burger" aria-label="Открыть меню">☰</button>
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="container hero-grid">
-                <div class="hero-content">
-                    <h1>Gothyxan — тёмная эстетика. Чёткий стиль.</h1>
-                    <p>Авторская подборка одежды, обуви и аксессуаров в готическом и альтернативном стиле. Ограниченные коллекции и быстрая отправка.</p>
-                    <div class="hero-cta">
-                        <a class="btn primary" href="catalog.html">Перейти в каталог</a>
-                        <a class="btn ghost" href="#">Новинки</a>
-                    </div>
+    <div class="container">
+        <h1 class="page-title">Product Collection</h1>
+        
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://example.com/images/rick-owens-hoodie-black.jpg" alt="Rick Owens Hoodie" class="product-image">
                 </div>
-                <div class="hero-visual" aria-hidden="true">
-                    <img src="https://picsum.photos/seed/goth1/1200/800" alt="Коллекция Gothyxan" />
+                <div class="product-info">
+                    <div class="product-brand">RICKOWENS</div>
+                    <h2 class="product-name">Rick Owens Hoodie</h2>
+                    <div class="product-code">6680 306</div>
+                    <button class="add-to-cart-btn" onclick="addToCart(1)">ADD TO CART</button>
                 </div>
             </div>
-        </section>
-
-        <section class="categories container">
-            <h2>Популярные категории</h2>
-            <div class="categories-grid">
-                <a class="cat-card" href="catalog.html">
-                    <img src="https://picsum.photos/seed/cat1/600/400" alt="Одежда">
-                    <div class="cat-title">Одежда</div>
-                </a>
-                <a class="cat-card" href="catalog.html">
-                    <img src="https://picsum.photos/seed/cat2/600/400" alt="Аксессуары">
-                    <div class="cat-title">Аксессуары</div>
-                </a>
-                <a class="cat-card" href="catalog.html">
-                    <img src="https://picsum.photos/seed/cat3/600/400" alt="Обувь">
-                    <div class="cat-title">Обувь</div>
-                </a>
-                <a class="cat-card" href="catalog.html">
-                    <img src="https://picsum.photos/seed/cat4/600/400" alt="Мерч">
-                    <div class="cat-title">Мерч</div>
-                </a>
-            </div>
-        </section>
-
-        <section class="products container">
-            <div class="section-head">
-                <h2>Хиты продаж</h2>
-                <a class="link-muted" href="catalog.html">Смотреть все</a>
-            </div>
-
-            <div class="products-grid">
-                <article class="product-card" data-id="prod-001" data-title="Пальто 'Nocturne'" data-price="7990" data-img="https://picsum.photos/seed/prod1/600/600">
-                    <a href="product.html?id=prod-001" class="product-media">
-                        <img src="https://picsum.photos/seed/prod1/600/600" alt="Пальто Nocturne">
-                    </a>
-                    <div class="product-body">
-                        <h3 class="product-title"><a href="product.html?id=prod-001">Пальто 'Nocturne'</a></h3>
-                        <div class="product-meta">M, L, XL</div>
-                        <div class="product-foot">
-                            <div class="price">7 990 ₽</div>
-                            <button class="btn small add-to-cart" type="button">Добавить</button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="prod-002" data-title="Ремень 'Raven'" data-price="1990" data-img="https://picsum.photos/seed/prod2/600/600">
-                    <a href="product.html?id=prod-002" class="product-media">
-                        <img src="https://picsum.photos/seed/prod2/600/600" alt="Ремень Raven">
-                    </a>
-                    <div class="product-body">
-                        <h3 class="product-title"><a href="product.html?id=prod-002">Ремень 'Raven'</a></h3>
-                        <div class="product-meta">Кожа</div>
-                        <div class="product-foot">
-                            <div class="price">1 990 ₽</div>
-                            <button class="btn small add-to-cart" type="button">Добавить</button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="prod-003" data-title="Платье 'Eclipse'" data-price="5490" data-img="https://picsum.photos/seed/prod3/600/600">
-                    <a href="product.html?id=prod-003" class="product-media">
-                        <img src="https://picsum.photos/seed/prod3/600/600" alt="Платье Eclipse">
-                    </a>
-                    <div class="product-body">
-                        <h3 class="product-title"><a href="product.html?id=prod-003">Платье 'Eclipse'</a></h3>
-                        <div class="product-meta">XS, S, M</div>
-                        <div class="product-foot">
-                            <div class="price">5 490 ₽</div>
-                            <button class="btn small add-to-cart" type="button">Добавить</button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card" data-id="prod-004" data-title="Ботинки 'Void'" data-price="9200" data-img="https://picsum.photos/seed/prod4/600/600">
-                    <a href="product.html?id=prod-004" class="product-media">
-                        <img src="https://picsum.photos/seed/prod4/600/600" alt="Ботинки Void">
-                    </a>
-                    <div class="product-body">
-                        <h3 class="product-title"><a href="product.html?id=prod-004">Ботинки 'Void'</a></h3>
-                        <div class="product-meta">40–44</div>
-                        <div class="product-foot">
-                            <div class="price">9 200 ₽</div>
-                            <button class="btn small add-to-cart" type="button">Добавить</button>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="newsletter">
-            <div class="container newsletter-inner">
-                <div>
-                    <h2>Подписка на новости</h2>
-                    <p>Получай скидки и первым смотри новые коллекции.</p>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="https://example.com/images/rick-owens-crewneck-black.jpg" alt="Crew Neck Pullover" class="product-image">
                 </div>
-                <form class="subscribe-form" action="#" method="post" onsubmit="alert('Спасибо за подписку (заглушка)'); return false;">
-                    <input type="email" name="email" placeholder="Твоя почта" required>
-                    <button class="btn primary" type="submit">Подписаться</button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div class="footer-col">
-                <a class="logo footer-logo" href="index.html">Gothyxan</a>
-                <p>Альтернативная мода с душой. Отправка по всей России.</p>
-            </div>
-
-            <div class="footer-col">
-                <h4>Покупателям</h4>
-                <ul>
-                    <li><a href="#">Доставка</a></li>
-                    <li><a href="#">Возврат</a></li>
-                    <li><a href="#">Оплата</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>Контакты</h4>
-                <address>
-                    hello@gothyxan.shop<br>
-                    @gothyxan
-                </address>
-            </div>
-        </div>
-
-        <div class="container footer-bottom">
-            <small>© 2025 Gothyxan. Все права защищены.</small>
-        </div>
-    </footer>
-
-    <script src="app.js" defer></script>
-    <script>
-    (function() {
-      const burger = document.querySelector('.burger');
-      const nav = document.querySelector('.main-nav');
-      burger && burger.addEventListener('click', () => {
-        nav && nav.classList.toggle('open');
-      });
-    })();
-    </script>
-</body>
-</html>
+                <div

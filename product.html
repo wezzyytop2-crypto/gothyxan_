@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Product — Gothyxan</title>
+  <meta name="description" content="Gothyxan product page">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">Gothyxan</a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="catalog.html">Shop</a></li>
+          <li><a href="#">Categories</a></li>
+          <li><a href="#">New</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn search-btn" aria-label="Search">🔍</button>
+        <a class="cart-btn" href="cart.html" aria-label="Cart">🛒 <span class="cart-count">0</span></a>
+        <button class="burger" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="product-detail" class="product-detail">
+      <div class="product-gallery">
+        <img id="pd-img" src="https://picsum.photos/seed/prod1/800/800" alt="">
+      </div>
+      <div class="product-info">
+        <h1 id="pd-title">Product name</h1>
+        <div id="pd-price" class="price">0</div>
+        <p id="pd-desc" class="muted">Short product description and materials.</p>
+
+        <div class="options">
+          <label>Size:
+            <select id="pd-size">
+              <option>XS</option><option>S</option><option>M</option><option>L</option>
+            </select>
+          </label>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:12px;align-items:center;">
+          <input id="pd-quantity" type="number" min="1" value="1" style="width:74px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)">
+          <button id="pd-add" class="btn primary">Add to cart</button>
+          <a id="pd-buy" class="btn ghost" href="cart.html">Checkout</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <small>© 2025 Gothyxan. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+  <script>
+    (function(){
+      function formatPrice(n){
+        return n.toLocaleString('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+      }
+
+      const url = new URL(location.href);
+      const id = url.searchParams.get('id') || 'prod-001';
+
+      const PRODUCTS = {
+        "prod-001": { id:"prod-001", title:"Coat 'Nocturne'", price:7990, img:"https://picsum.photos/seed/prod1/800/800", desc:"A warm gothic-style coat. Composition: 60% wool." },
+        "prod-002": { id:"prod-002", title:"Belt 'Raven'", price:1990, img:"https://picsum.photos/seed/prod2/800/800", desc:"Leather belt with a metal buckle." },
+        "prod-003": { id:"prod-003", title:"Dress 'Eclipse'", price:5490, img:"https://picsum.photos/seed/prod3/800/800", desc:"Light evening dress with lace." },
+        "prod-004": { id:"prod-004", title:"Boots 'Void'", price:9200, img:"https://picsum.photos/seed/prod4/800/800", desc:"High lace-up boots, 4 cm platform." }
+      };
+
+      const p = PRODUCTS[id] || PRODUCTS['prod-001'];
+      document.getElementById('pd-img').src = p.img;
+      document.getElementById('pd-title').textContent = p.title;
+      document.getElementById('pd-price').textContent = formatPrice(p.price);
+      document.getElementById('pd-desc').textContent = p.desc;
+
+      document.getElementById('pd-add').addEventListener('click', () => {
+        const qty = Math.max(1, parseInt(document.getElementById('pd-quantity').value||1,10));
+        const size = document.getElementById('pd-size').value;
+        window.GOTHYXAN_addToCart({
+          id: p.id + (size ? ('#' + size) : ''),
+          title: p.title + (size ? (' — ' + size) : ''),
+          price: p.price,
+          img: p.img,
+          qty
+        });
+        document.querySelectorAll('.cart-count').forEach(el => el.textContent = window.GOTHYXAN_getCount());
+        alert('Added to cart');
+      });
+    })();
+  </script>
+</body>
+</html>

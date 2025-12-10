@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — Gothyxan</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* admin small layout */
+    .admin-wrap{max-width:980px;margin:48px auto;padding:22px;background:var(--surface);border:1px solid rgba(10,10,10,0.03);border-radius:10px}
+    .admin-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .admin-form .full{grid-column:1/-1}
+    .admin-row{display:flex;gap:8px;align-items:center}
+    .admin-list{margin-top:18px}
+    label input, label textarea{width:100%;padding:10px;border:1px solid rgba(10,10,10,0.06);border-radius:8px}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="admin-wrap" id="admin-area" aria-hidden="true">
+      <h1>Admin panel</h1>
+      <div class="hint">Add / edit products. This panel is not linked from the site. URL: /admin.html</div>
+
+      <form id="admin-form" class="admin-form" onsubmit="return false;">
+        <label class="full">Title: <input id="p-title" required /></label>
+        <label>Price (€): <input id="p-price" type="number" min="0" required /></label>
+        <label>Category: <input id="p-category" placeholder="unisex / boys / girls" /></label>
+        <label class="full">Short description: <textarea id="p-desc" rows="2"></textarea></label>
+        <label class="full">Color placeholder (hex): <input id="p-color" placeholder="#111111" /></label>
+        <label class="full">Image (optional): <input id="p-image" type="file" accept="image/*" /></label>
+
+        <div class="full admin-row" style="margin-top:8px">
+          <button id="save-product" class="btn primary">Save product</button>
+          <button id="cancel-product" class="btn ghost">Reset</button>
+        </div>
+      </form>
+
+      <h3>Existing products</h3>
+      <div id="admin-products" class="admin-list"></div>
+    </div>
+  </main>
+
+  <!-- Firebase init: paste your config into firebase-init.js or add inline before firebase-init.js -->
+  <!-- Firebase compat scripts (used for simplicity) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+
+  <!-- Insert your firebase config here (or in firebase-init.js) -->
+  <script src="firebase-init.js"></script>
+
+  <script src="app.js" defer></script>
+  <script>
+    // Simple access control: prompt for password when opening admin.html
+    (function(){
+      const ok = prompt("Enter admin password:");
+      // client-side fallback password (will be ignored if Firebase auth used)
+      if (ok !== 'opiumadmin' && !window.firebase) {
+        alert('Access denied (local)');
+        document.getElementById('admin-area').remove();
+      } else {
+        // If firebase is initialized and user is authenticated, show admin area
+        if (window.firebase && firebase.auth && firebase.auth().currentUser) {
+          document.getElementById('admin-area').removeAttribute('aria-hidden');
+        } else {
+          // reveal area for local mode (or after password)
+          document.getElementById('admin-area').removeAttribute('aria-hidden');
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
